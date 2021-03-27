@@ -7,24 +7,21 @@
 
 #include <vector>
 
-template <typename T, int DEF>
-class RealMatrix {
-protected:
-    int default_val = DEF;
-    std::vevtor<std::vector<T>> matrix;
-public:
-    virtual ~RealMatrix() = default;
-    virtual std::size_t size() = 0;
-};
+namespace pattern_matrix {
 
-template <typename T, int DEF>
-class Matrix : public RealMatrix{
-public:
-    Matrix(){
-        matrix.resize(0);
-        matrix.push_back();
-    }
-
-};
+    template<typename T, int DEF>
+    class RealMatrix {
+    protected:
+        int default_val = DEF;
+        std::vector<std::vector<T>> matrix;
+    public:
+        RealMatrix(){
+            for(auto i = 0 ; i < 1000; i++)
+                matrix.emplace_back(std::vector<T>(100,default_val));
+        }
+        virtual ~RealMatrix() = default;
+        virtual std::size_t size() = 0;
+    };
+}
 
 #endif //PATTERN_MATRIX_MATRIX_H

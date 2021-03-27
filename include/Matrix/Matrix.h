@@ -2,7 +2,17 @@
 // Created by dim on 3/27/21.
 //
 
-#ifndef PATTERN_MATRIX_MATRIX_H
-#define PATTERN_MATRIX_MATRIX_H
+#pragma once
 
-#endif //PATTERN_MATRIX_MATRIX_H
+#include "RealMatrix/RealMatrix.h"
+
+namespace pattern_matrix {
+
+    template<typename T, int Val>
+    class Matrix : protected RealMatrix<T,Val> {
+    public:
+        using RM = RealMatrix<T,Val>;
+        Matrix(){}
+    };
+}
+
