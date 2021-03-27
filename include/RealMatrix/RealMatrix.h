@@ -13,7 +13,7 @@ namespace pattern_matrix {
     class RealMatrix {
     protected:
         int default_val = DEF;
-        std::vector<T> matrix;
+        std::vector<T> realContainer;
     public:
         RealMatrix(){
 
