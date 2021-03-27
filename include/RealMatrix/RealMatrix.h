@@ -13,11 +13,10 @@ namespace pattern_matrix {
     class RealMatrix {
     protected:
         int default_val = DEF;
-        std::vector<std::vector<T>> matrix;
+        std::vector<T> matrix;
     public:
         RealMatrix(){
-            for(auto i = 0 ; i < 1000; i++)
-                matrix.emplace_back(std::vector<T>(100,default_val));
+
         }
         virtual ~RealMatrix() = default;
         virtual std::size_t size() = 0;
