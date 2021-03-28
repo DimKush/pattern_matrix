@@ -13,6 +13,9 @@ int main(){
     std::cout << matrix(10,10) << std::endl;
     matrix(10,10) = 5;
     std::cout << matrix(10,10) << std::endl;
-    matrix[0];
+    matrix[1][1] = 10;
+
+    std::cout << matrix[1][1]  << std::endl;
+
     return 0;
 }

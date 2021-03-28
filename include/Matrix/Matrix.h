@@ -46,15 +46,21 @@ namespace pattern_matrix {
         }
 
         class MatrixProxy {
+        public:
             // TODO : constructor https://stackoverflow.com/questions/12657811/overloading-operators-in-c
-            T & operator [] (const int col){
-                std::cout << "val = " << col << std::endl;
-
+            T & operator [] (int col){
+                //std::cout << "col = " << col << std::endl;
+                //std::cout << "row = " << row_ << std::endl;
+                return matrix_ptr_->operator()(row_,col);
             }
+
+            Matrix<T,Val> * matrix_ptr_ = nullptr;
+            int row_ = 0;
+            MatrixProxy(Matrix<T, Val>* obj, int row) : matrix_ptr_(new Matrix<T,Val>(*obj)),row_(row){}
         };
 
-        const MatrixProxy operator[](const int row) const{
-            std::cout << "row = " << row << std::endl;
+        MatrixProxy operator[](int row){
+            //std::cout << "row = " << row << std::endl;
             return MatrixProxy(this,row);
         }
     };
