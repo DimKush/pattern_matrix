@@ -26,6 +26,7 @@ add_library(${LIB_NAME} STATIC
         ${PROJECT_SOURCE_DIR}/src/RealMatrix/RealMatrix.cpp
         ${PROJECT_SOURCE_DIR}/src/Matrix/Matrix.tpp
         ${PROJECT_SOURCE_DIR}/include/Matrix/Matrix.h
+        ${PROJECT_SOURCE_DIR}/include/MatrixProxy/MatrixProxy.h
         ${PROJECT_SOURCE_DIR}/include/RealMatrix/RealMatrix.h
         )
 
