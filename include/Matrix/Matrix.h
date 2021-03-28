@@ -41,11 +41,22 @@ namespace pattern_matrix {
                 return RM::realContainer.at(std::get<2>(matrix.at(0)));
             }
         }
-
         std::size_t size(){
             return RM::realContainer.size();
         }
-        
+
+        class MatrixProxy {
+            // TODO : constructor https://stackoverflow.com/questions/12657811/overloading-operators-in-c
+            T & operator [] (const int col){
+                std::cout << "val = " << col << std::endl;
+
+            }
+        };
+
+        const MatrixProxy operator[](const int row) const{
+            std::cout << "row = " << row << std::endl;
+            return MatrixProxy(this,row);
+        }
     };
 }
 
