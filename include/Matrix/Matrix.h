@@ -18,7 +18,7 @@ namespace pattern_matrix {
     public:
         Matrix(){}
 
-        void insertTrick(int const & x, int const & y, const int val = -1){
+        void insertTrick(int const & x, int const & y, const int val = Val){
             RM::realContainer.push_back(val);
             auto sz = RM::realContainer.size();
             matrix.push_back(std::tie(x,y,--sz));
@@ -44,7 +44,7 @@ namespace pattern_matrix {
         std::size_t size(){
             return RM::realContainer.size();
         }
-
+        
     };
 }
 
