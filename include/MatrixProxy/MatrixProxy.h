@@ -4,7 +4,7 @@
 #pragma once
 
 #include "Matrix/Matrix.h"
-
+/*
 namespace pattern_matrix{
     template<typename T, int DEF>
     class MatrixProxy : public Matrix<T,DEF>{
@@ -20,8 +20,8 @@ namespace pattern_matrix{
             return object_->operator()(x,y);
         }
 
-        T & operator [] (int const & x){
-
+        RealMatrix<T,DEF> operator [] (int const & x){
+            return
         }
         std::size_t size() {
             return object_->size();
@@ -34,3 +34,4 @@ namespace pattern_matrix{
 
 
 }
+ */
