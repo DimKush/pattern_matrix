@@ -17,6 +17,7 @@ namespace pattern_matrix {
         std::vector<std::tuple<std::size_t,std::size_t, std::size_t>> matrix;
     public:
         Matrix(){}
+        virtual ~Matrix(){}
 
         void insertTrick(int const & x, int const & y, const int val = Val){
             RM::realContainer.push_back(val);
