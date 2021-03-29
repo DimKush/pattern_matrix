@@ -7,6 +7,7 @@
 #include "RealMatrix/RealMatrix.h"
 
 #include <iostream>
+#include <algorithm>
 #include <tuple>
 
 namespace pattern_matrix {
@@ -25,32 +26,43 @@ namespace pattern_matrix {
             matrix.push_back(std::tie(x,y,--sz));
         }
 
-        T & operator () (int const & x, int const & y) {
-            if(matrix.size() != 0)
-                for(auto iter : matrix){
-                    if(std::get<0>(iter) == x && std::get<1>(iter) == y)
-                        return RM::realContainer.at(std::get<2>(iter));
-                    else{
-                        insertTrick(x,y);
-                        return RM::realContainer.at(std::get<2>(iter));
-                    }
+        T & operator () (int const x, int const y) {
+            if(matrix.size() != 0) {
+                auto iter = std::find_if(matrix.begin(),matrix.end(),[=](const auto & element){
+                    return std::get<0>(element) == x && std::get<1>(element) == y;
+                });
+
+                if (iter != matrix.end()) {
+                    std::size_t pos = std::get<2>(*iter);
+                    return RM::realContainer.at(pos);
                 }
+                else {
+                    insertTrick(x, y);
+                    std::size_t pos = RM::realContainer.size() - 1;
+                    return RM::realContainer.at(pos);
+                }
+            }
             else {
                 insertTrick(x,y);
-
                 return RM::realContainer.at(std::get<2>(matrix.at(0)));
             }
         }
         std::size_t size(){
             return RM::realContainer.size();
         }
+        void showAll(){
+            std::cout << "SHOW ALL" << std::endl;
+            for(auto i : RM::realContainer){
+
+                std::cout << i << std::endl;
+            }
+            std::cout << "==SHOW ALL==" << std::endl;
+        }
 
         class MatrixProxy {
         public:
-            // TODO : constructor https://stackoverflow.com/questions/12657811/overloading-operators-in-c
+
             T & operator [] (int col){
-                //std::cout << "col = " << col << std::endl;
-                //std::cout << "row = " << row_ << std::endl;
                 return matrix_ptr_->operator()(row_,col);
             }
 
@@ -66,6 +78,7 @@ namespace pattern_matrix {
             //std::cout << "row = " << row << std::endl;
             return MatrixProxy(this,row);
         }
+
     };
 }
 
