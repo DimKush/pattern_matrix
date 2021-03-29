@@ -51,13 +51,11 @@ namespace pattern_matrix {
             return RM::realContainer.size();
         }
 
-        void showAll() {
-            std::cout << "SHOW ALL" << std::endl;
-            for (auto i : RM::realContainer) {
-
-                std::cout << i << std::endl;
-            }
-            std::cout << "==SHOW ALL==" << std::endl;
+        void showAll() const {
+           for(const auto & iter : matrix){
+               auto num = &RM::realContainer.at(std::get<2>(iter));
+               std::cout << '[' << std::get<0>(iter) << "][" << std::get<1>(iter) << "] = " << *num << std::endl;
+           }
         }
 
         class MatrixProxy {
@@ -108,9 +106,7 @@ namespace pattern_matrix {
             return iterator(&RM::realContainer.at(pos));
         }
         auto end(){
-            auto iterEnd = std::prev(matrix.end());
-            auto pos = std::get<2>(*iterEnd);
-            return iterator(&RM::realContainer.at(pos));
+            return iterator(&*(RM::realContainer.end()));
         }
     };
 }
