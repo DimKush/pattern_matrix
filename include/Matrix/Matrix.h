@@ -13,46 +13,47 @@
 namespace pattern_matrix {
 
     template<typename T, int Val>
-    class Matrix : protected RealMatrix<T,Val> {
-        using RM = RealMatrix<T,Val>;
-        std::vector<std::tuple<std::size_t,std::size_t, std::size_t>> matrix;
+    class Matrix : protected RealMatrix<T, Val> {
+        using RM = RealMatrix<T, Val>;
+        std::vector<std::tuple<std::size_t, std::size_t, std::size_t>> matrix;
     public:
-        Matrix(){}
-        virtual ~Matrix(){}
+        Matrix() {}
 
-        void insertTrick(int const & x, int const & y, const int val = Val){
+        virtual ~Matrix() {}
+
+        void insertTrick(int const &x, int const &y, const int val = Val) {
             RM::realContainer.push_back(val);
             auto sz = RM::realContainer.size();
-            matrix.push_back(std::tie(x,y,--sz));
+            matrix.push_back(std::tie(x, y, --sz));
         }
 
-        T & operator () (int const x, int const y) {
-            if(matrix.size() != 0) {
-                auto iter = std::find_if(matrix.begin(),matrix.end(),[=](const auto & element){
+        T &operator()(int const x, int const y) {
+            if (matrix.size() != 0) {
+                auto iter = std::find_if(matrix.begin(), matrix.end(), [=](const auto &element) {
                     return std::get<0>(element) == x && std::get<1>(element) == y;
                 });
 
                 if (iter != matrix.end()) {
                     std::size_t pos = std::get<2>(*iter);
                     return RM::realContainer.at(pos);
-                }
-                else {
+                } else {
                     insertTrick(x, y);
                     std::size_t pos = RM::realContainer.size() - 1;
                     return RM::realContainer.at(pos);
                 }
-            }
-            else {
-                insertTrick(x,y);
+            } else {
+                insertTrick(x, y);
                 return RM::realContainer.at(std::get<2>(matrix.at(0)));
             }
         }
-        std::size_t size(){
+
+        std::size_t size() {
             return RM::realContainer.size();
         }
-        void showAll(){
+
+        void showAll() {
             std::cout << "SHOW ALL" << std::endl;
-            for(auto i : RM::realContainer){
+            for (auto i : RM::realContainer) {
 
                 std::cout << i << std::endl;
             }
@@ -62,23 +63,54 @@ namespace pattern_matrix {
         class MatrixProxy {
         public:
 
-            T & operator [] (int col){
-                return matrix_ptr_->operator()(row_,col);
+            T &operator[](int col) {
+                return matrix_ptr_->operator()(row_, col);
             }
 
-            Matrix<T,Val> * matrix_ptr_ = nullptr;
+            Matrix<T, Val> *matrix_ptr_ = nullptr;
             int row_ = 0;
-            MatrixProxy(Matrix<T, Val>* obj, int row){
+
+            MatrixProxy(Matrix<T, Val> *obj, int row) {
                 matrix_ptr_ = obj;
                 row_ = row;
             }
         };
 
-        MatrixProxy operator[](int row){
+        MatrixProxy operator[](int row) {
             //std::cout << "row = " << row << std::endl;
-            return MatrixProxy(this,row);
+            return MatrixProxy(this, row);
         }
 
+        class iterator {
+            using iterator_category = std::forward_iterator_tag;
+            using difference_type = std::ptrdiff_t;
+            using value_type = T;
+            using reference  = T &;
+            using pointer    = T*;
+        public:
+            iterator(pointer ptr) : it_ptr(ptr) {}
+            reference operator *() {
+                return *it_ptr;
+            }
+            bool operator!=(const iterator& it)
+            {
+                return it_ptr != it.it_ptr;
+            }
+            bool operator++(){
+                it_ptr++;
+            }
+        private:
+            pointer it_ptr;
+        };
+        auto begin(){
+            auto iterBegin = matrix.begin();
+            auto pos = std::get<2>(*iterBegin);
+            return iterator(&RM::realContainer.at(pos));
+        }
+        auto end(){
+            auto iterEnd = std::prev(matrix.end());
+            auto pos = std::get<2>(*iterEnd);
+            return iterator(&RM::realContainer.at(pos));
+        }
     };
 }
-

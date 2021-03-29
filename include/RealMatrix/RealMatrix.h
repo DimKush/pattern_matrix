@@ -11,10 +11,10 @@ namespace pattern_matrix {
 
     template<typename T, int DEF>
     class RealMatrix {
-    protected:
+    public:
         int default_val = DEF;
         std::vector<T> realContainer;
-    public:
+
         RealMatrix(){
 
         }
