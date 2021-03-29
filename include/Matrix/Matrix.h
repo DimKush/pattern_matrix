@@ -56,7 +56,10 @@ namespace pattern_matrix {
 
             Matrix<T,Val> * matrix_ptr_ = nullptr;
             int row_ = 0;
-            MatrixProxy(Matrix<T, Val>* obj, int row) : matrix_ptr_(new Matrix<T,Val>(*obj)),row_(row){}
+            MatrixProxy(Matrix<T, Val>* obj, int row){
+                matrix_ptr_ = obj;
+                row_ = row;
+            }
         };
 
         MatrixProxy operator[](int row){
